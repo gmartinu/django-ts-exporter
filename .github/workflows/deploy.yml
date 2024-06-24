@@ -1,0 +1,42 @@
+name: Deploy to PyPI
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v2
+      - name: Set up Python
+        uses: actions/setup-python@v2
+        with:
+          python-version: "3.8"
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install wheel twine
+      - name: Bump version and create tag
+        id: tag
+        run: |
+          echo "Bumping version..."
+          current_version=$(python setup.py --version)
+          echo "Current version: $current_version"
+          new_version=$(python -c "from packaging.version import Version; print(f'{Version(\'$current_version\').major}.{Version(\'$current_version\').minor + 1}.0')") 
+          echo "New version: $new_version"
+          sed -i "s/version=\"$current_version\"/version=\"$new_version\"/" setup.py
+          git config --global user.email "gabrielbramos@outlook.com"
+          git config --global user.name "Gabriel Martinusso"
+          git commit -am "Bump version to $new_version"
+          git tag "v$new_version"
+          git push origin main --tags
+      - name: Build and publish
+        env:
+          TWINE_USERNAME: __token__
+          TWINE_PASSWORD: ${{ secrets.PYPI_API_TOKEN }}
+        run: |
+          python setup.py sdist bdist_wheel
+          twine upload dist/*
