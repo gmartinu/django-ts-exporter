@@ -27,6 +27,7 @@ jobs:
           python -m unittest discover tests
 
   bump-version:
+    if: github.ref == 'refs/heads/main'
     needs: test
     runs-on: ubuntu-latest
     steps:
