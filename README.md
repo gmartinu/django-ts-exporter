@@ -15,36 +15,25 @@ This tool allows you to easily export Django models and serializers as TypeScrip
 
 ## Supported Field Types
 
-### Models
-
-- CharField -> `string`
-- IntegerField -> `number`
-- BooleanField -> `boolean`
-- DateTimeField -> `string` (ISO 8601)
-- DateField -> `string` (ISO 8601)
-- DecimalField -> `number`
-- UUIDField -> `string`
-- JSONField -> `{ [key: string]: any }`
-- ForeignKey -> `RelatedModel`
-- ManyToManyField -> `RelatedModel[]`
-- OneToOneField -> `RelatedModel`
-- FileField -> `File`
-- Fields with choices -> `enum`
-
-### Serializers
-
-- CharField -> `string`
-- IntegerField -> `number`
-- BooleanField -> `boolean`
-- DateTimeField -> `string` (ISO 8601)
-- DateField -> `string` (ISO 8601)
-- DecimalField -> `number`
-- PrimaryKeyRelatedField -> `RelatedSerializer`
-- ManyRelatedField -> `RelatedSerializer[]`
-- FileField -> `File`
-- ListSerializer -> `RelatedSerializer[]`
-- SerializerMethodField -> inferred type or `any`
-- Fields with choices -> `enum`
+| **Type**                   | **Models** | **Serializers** | **Expected Value**                       |
+|----------------------------|------------|-----------------|------------------------------------------|
+| CharField                  | ✓          | ✓               | `string`                                 |
+| IntegerField               | ✓          | ✓               | `number`                                 |
+| BooleanField               | ✓          | ✓               | `boolean`                                |
+| DateTimeField              | ✓          | ✓               | `string` (ISO 8601)                      |
+| DateField                  | ✓          | ✓               | `string` (ISO 8601)                      |
+| DecimalField               | ✓          | ✓               | `number`                                 |
+| UUIDField                  | ✓          | X               | `string`                                 |
+| JSONField                  | ✓          | X               | `{ [key: string]: any }`                 |
+| ForeignKey                 | ✓          | ✓               | `RelatedModel` / `RelatedSerializer`     |
+| ManyToManyField            | ✓          | ✓               | `RelatedModel[]` / `RelatedSerializer[]` |
+| OneToOneField              | ✓          | X               | `RelatedModel`                           |
+| FileField                  | ✓          | ✓               | `File`                                   |
+| Fields with choices        | ✓          | ✓               | `enum`                                   |
+| PrimaryKeyRelatedField     | X          | ✓               | `RelatedSerializer`                      |
+| ManyRelatedField           | X          | ✓               | `RelatedSerializer[]`                    |
+| ListSerializer             | X          | ✓               | `RelatedSerializer[]`                    |
+| SerializerMethodField      | X          | ✓               | inferred type or `any`                   |
 
 ## Installation
 
