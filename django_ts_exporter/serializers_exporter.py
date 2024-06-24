@@ -220,7 +220,17 @@ class SerializersExporter:
         interface = (
             f"export interface {name} {{\n  " + "\n  ".join(ts_fields) + "\n}\n\n"
         )
-        result = f"{import_statements}\n\n{enum_statements}\n{interface}"
+
+        result = ""
+
+        if import_statements:
+            result = f"{import_statements}\n\n"
+
+        if enum_statements:
+            result = result + f"{enum_statements}\n\n"
+
+        if interface:
+            result = result + f"{interface}"
 
         return result, list(imports)
 

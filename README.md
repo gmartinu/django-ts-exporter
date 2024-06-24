@@ -98,6 +98,14 @@ To export TypeScript interfaces from Django models:
 django-ts-exporter --outdir ./typescript --exclude info e2e --logs --source models
 ```
 
+## Running Tests
+
+To run the tests, use the following command:
+
+```bash
+python -m unittest discover tests
+```
+
 ## Contributing
 
 Feel free to open issues or submit pull requests on [GitHub](https://github.com/gmartinu/django-ts-exporter).
