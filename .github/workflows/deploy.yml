@@ -25,7 +25,7 @@ jobs:
 
   deploy:
     runs-on: ubuntu-latest
-    needs: test
+    needs: test # This ensures deploy runs only if test job is successful
 
     steps:
       - uses: actions/checkout@v2
@@ -40,6 +40,8 @@ jobs:
           pip install wheel twine
       - name: Bump version and create tag
         id: tag
+        env:
+          GH_PAT: ${{ secrets.GH_PAT }}
         run: |
           echo "Bumping version..."
           current_version=$(python setup.py --version)
@@ -51,7 +53,7 @@ jobs:
           git config --global user.name "Gabriel Martinusso"
           git commit -am "Bump version to $new_version"
           git tag "v$new_version"
-          git push origin main --tags
+          git push https://$GH_PAT@github.com/gmartinu/django-ts-exporter.git main --tags
       - name: Build and publish
         env:
           TWINE_USERNAME: __token__
