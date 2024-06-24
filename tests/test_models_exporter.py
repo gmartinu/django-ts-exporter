@@ -3,6 +3,7 @@ from django.test import TestCase
 from django.apps import apps
 from django.conf import settings
 from django_ts_exporter.models_exporter import ModelsExporter
+from constants.models_exporter import MODELS_INTERFACE
 
 # Configure settings for the Django test environment if not already configured
 if not settings.configured:
@@ -33,25 +34,8 @@ class ModelsExporterTestCase(TestCase):
         with open("./tests/typescript/tests/TestModel.ts", "r", encoding="utf-8") as f:
             content = f.read()
 
-        expected_content = """import { RelatedModel } from "./RelatedModel.ts";
+        expected_content = MODELS_INTERFACE
 
-export interface TestModel {
-  id: number;
-  char_field: string;
-  integer_field: number;
-  boolean_field: boolean;
-  datetime_field: string;
-  date_field: string;
-  decimal_field: number;
-  uuid_field: string;
-  json_field: { [key: string]: any };
-  foreign_key: RelatedModel;
-  one_to_one: RelatedModel;
-  file_field: File;
-  many_to_many: RelatedModel[];
-}
-
-"""
         self.assertEqual(content.strip(), expected_content.strip())
 
 

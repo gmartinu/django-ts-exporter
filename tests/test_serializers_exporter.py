@@ -2,9 +2,8 @@ import unittest
 from django.test import TestCase
 from django.apps import apps
 from django.conf import settings
-from rest_framework import serializers
 from django_ts_exporter.serializers_exporter import SerializersExporter
-from tests.models import RelatedModel, TestModel
+from constants.serializers_exporter import SERIALIZERS_INTERFACE
 
 # Configure settings for the Django test environment if not already configured
 if not settings.configured:
@@ -37,25 +36,8 @@ class SerializersExporterTestCase(TestCase):
         ) as f:
             content = f.read()
 
-        expected_content = """import { RelatedModelSerializer } from "./RelatedModelSerializer.ts";
+        expected_content = SERIALIZERS_INTERFACE
 
-export interface TestModelSerializer {
-  id: number;
-  char_field: string;
-  integer_field: number;
-  boolean_field: boolean;
-  datetime_field: string;
-  date_field: string;
-  decimal_field: number;
-  uuid_field: string;
-  json_field: { [key: string]: any };
-  file_field: File;
-  foreign_key: RelatedModelSerializer;
-  one_to_one: RelatedModelSerializer;
-  many_to_many: RelatedModelSerializer[];
-}
-
-"""
         self.assertEqual(content.strip(), expected_content.strip())
 
 
