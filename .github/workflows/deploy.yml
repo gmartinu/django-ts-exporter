@@ -25,7 +25,8 @@ jobs:
 
   deploy:
     runs-on: ubuntu-latest
-    needs: test # This ensures deploy runs only if test job is successful
+    needs: test
+    environment: pypi
 
     steps:
       - uses: actions/checkout@v2
