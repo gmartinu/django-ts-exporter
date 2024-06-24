@@ -42,7 +42,7 @@ jobs:
       - name: Bump version and create tag
         id: tag
         env:
-          GH_PAT: ${{ secrets.GH_PAT }}
+          GH_PAT: ${{ secrets.GITHUB_TOKEN  }}
         run: |
           echo "Bumping version..."
           current_version=$(python setup.py --version)
