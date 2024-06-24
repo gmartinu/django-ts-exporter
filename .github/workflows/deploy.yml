@@ -4,6 +4,9 @@ on:
   push:
     branches:
       - main
+  pull_request:
+    branches:
+      - "**"
 
 jobs:
   test:
@@ -24,6 +27,7 @@ jobs:
           python -m unittest discover tests
 
   deploy:
+    if: github.ref == 'refs/heads/main'
     runs-on: ubuntu-latest
     needs: test
     environment: pypi
