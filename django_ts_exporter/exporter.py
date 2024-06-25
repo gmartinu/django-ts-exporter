@@ -130,7 +130,7 @@ def main():
         help="Source to export: serializers or models",
     )
     parser.add_argument(
-        "-v", "--version", action="version", version="django-ts-exporter 0.1.0"
+        "-v", "--version", action="version", version="django-ts-exporter 0.4.0"
     )
     args = parser.parse_args()
 
